@@ -1,0 +1,31 @@
+# Ignore node_modules directory
+/node_modules
+
+# Ignore environment variables file
+.env
+
+# Ignore build artifacts and temporary files
+/build
+/dist
+/coverage
+.DS_Store
+
+# Ignore IDE/Editor specific files
+.vscode/
+.idea/
+*.iml
+
+# Ignore dependency lock files
+yarn.lock
+package-lock.json
+
+# Ignore user-specific files
+.histfile
+.bash_history
+
+# Ignore logs
+/logs
+
+# Ignore documentation and notes
+/docs
+/notes.txt
