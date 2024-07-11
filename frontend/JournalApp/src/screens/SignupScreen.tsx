@@ -1,52 +1,89 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
-import { signup } from '../services/signupService';
+import { View, Text, TextInput, StyleSheet, Pressable, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
-interface SignupProps {
-  // Define props here if needed
-}
-
-const Signup: React.FC<SignupProps> = () => {
+const SignupScreen = () => {
+  const navigation = useNavigation();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [backgroundColor, setBackgroundColor] = useState('#ffffff');
 
   const handleSignup = async () => {
+    if (!username || !email || !password) {
+      Alert.alert('Error', 'All fields are required!');
+      return;
+    }
+
     try {
-      const userData = { username, email, password };
-      const response = await signup(userData);
-      // Assuming your backend returns a success message or user data upon successful signup
-      Alert.alert('Signup Successful', 'You are now signed up!');
-      // Navigate to another screen upon successful signup if needed
+      const response = await axios.post('http://localhost:5000/api/signup', {
+        username,
+        email,
+        password,
+      });
+
+      if (response.data.success) {
+        Alert.alert('Success', 'Account created successfully!', [
+          { text: 'OK', onPress: () => navigation.navigate('Login') }
+        ]);
+      } else {
+        Alert.alert('Error', response.data.message);
+      }
     } catch (error) {
-      console.error('Signup error:', error);
-      Alert.alert('Signup Failed', 'Please try again later.');
+      console.error(error);
+      Alert.alert('Error', 'An error occurred during signup. Please try again.');
     }
   };
 
+  const handleBack = () => {
+    navigation.goBack();
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor }]}>
       <Text style={styles.title}>Sign Up</Text>
+      
       <TextInput
         style={styles.input}
         placeholder="Username"
-        onChangeText={text => setUsername(text)}
         value={username}
+        onChangeText={setUsername}
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.input}
         placeholder="Email"
-        onChangeText={text => setEmail(text)}
         value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
-        secureTextEntry={true}
-        onChangeText={text => setPassword(text)}
         value={password}
+        onChangeText={setPassword}
+        secureTextEntry
       />
-      <Button title="Sign Up" onPress={handleSignup} />
+
+      <Pressable style={styles.button} onPress={handleSignup}>
+        <Text style={styles.buttonText}>Sign Up</Text>
+      </Pressable>
+
+      <Pressable onPress={handleBack}>
+        <Text style={styles.backButton}>Back</Text>
+      </Pressable>
+
+      <View style={styles.colorContainer}>
+        {['#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9', '#92A8D1', '#955251'].map(color => (
+          <Pressable
+            key={color}
+            style={[styles.colorButton, { backgroundColor: color }]}
+            onPress={() => setBackgroundColor(color)}
+          />
+        ))}
+      </View>
     </View>
   );
 };
@@ -56,20 +93,54 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    padding: 16,
   },
   title: {
     fontSize: 24,
     marginBottom: 20,
+    color: '#333',
   },
   input: {
-    width: '100%',
+    width: '80%',
+    height: 50,
+    borderColor: '#007bff',
+    borderWidth: 2,
+    borderRadius: 25,
+    paddingHorizontal: 16,
+    marginBottom: 20,
+    backgroundColor: '#fff',
+  },
+  button: {
+    width: '80%',
+    height: 50,
+    backgroundColor: '#007bff',
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+  },
+  backButton: {
+    color: '#007bff',
+    fontSize: 18,
+    marginBottom: 20,
+  },
+  colorContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '80%',
+    marginTop: 20,
+  },
+  colorButton: {
+    width: 40,
     height: 40,
-    borderColor: 'gray',
+    borderRadius: 20,
+    borderColor: '#ccc',
     borderWidth: 1,
-    marginBottom: 10,
-    paddingLeft: 10, // Adjust padding as needed
   },
 });
 
-export default Signup;
+export default SignupScreen;
