@@ -1,8 +1,10 @@
+// frontend/JournalApp/src/App.tsx
+
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Signup from './src/screens/SignupScreen';
-
+import SignupScreen from './src/screens/SignupScreen';
+import LoginScreen from './src/screens/LoginScreen';
 
 const Stack = createStackNavigator();
 
@@ -10,8 +12,9 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Signup">
-        <Stack.Screen name="Signup" component={Signup} />
-        {/* Other screens and navigation options */}
+        <Stack.Screen name="Signup" component={SignupScreen} options={{ title: 'Sign Up' }} />
+        <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login' }} />
+        {/* Add more screens here as needed */}
       </Stack.Navigator>
     </NavigationContainer>
   );
