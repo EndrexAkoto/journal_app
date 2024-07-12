@@ -1,23 +1,24 @@
-// src/screens/EditJournalEntryScreen.js
-
 import React, { useState } from 'react'
 import { View, Text, TextInput, StyleSheet, Pressable, Alert } from 'react-native'
 
-const EditJournalEntryScreen = ({ route, navigation }) => {
+import { RouteProp } from '@react-navigation/native';
+
+type RootStackParamList = {
+  EditJournalEntry: { entryId: string };
+};
+
+type EditJournalEntryScreenRouteProp = RouteProp<RootStackParamList, 'EditJournalEntry'>;
+
+const EditJournalEntryScreen = ({ route }: { route: EditJournalEntryScreenRouteProp, navigation: any }) => {
   const { entryId } = route.params
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [category, setCategory] = useState('')
   const [date, setDate] = useState('')
 
-  // Fetch entry details based on entryId and set initial state
-
   const handleEditEntry = () => {
-    // Implement logic to update journal entry
-    // Example: Dispatch action to update entry in Redux store or call API endpoint
-
-    Alert.alert('Entry Updated', 'Journal entry updated successfully!')
-    navigation.goBack()
+      Alert.alert('Entry Updated', 'Journal entry updated successfully!')
+      navigation.goBack()
   }
 
   return (

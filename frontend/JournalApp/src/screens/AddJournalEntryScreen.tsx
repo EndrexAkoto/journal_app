@@ -1,5 +1,3 @@
-// src/screens/AddJournalEntryScreen.js
-
 import React, { useState } from 'react'
 import { View, Text, TextInput, StyleSheet, Pressable, Alert } from 'react-native'
 
@@ -10,8 +8,6 @@ const AddJournalEntryScreen = () => {
   const [date, setDate] = useState('')
 
   const handleAddEntry = () => {
-    // Implement logic to add journal entry
-    // Example: Dispatch action to add entry to Redux store or call API endpoint
 
     Alert.alert('Entry Added', 'Journal entry added successfully!')
     setTitle('')

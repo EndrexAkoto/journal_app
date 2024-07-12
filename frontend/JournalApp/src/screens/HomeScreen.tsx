@@ -1,16 +1,29 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+type RootStackParamList = {
+  Login: undefined;
+  Signup: undefined;
+  JournalList: undefined;
+};
+
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 
 const HomeScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<HomeScreenNavigationProp>();
 
   const handleLogin = () => {
     navigation.navigate('Login');
   };
 
   const handleSignup = () => {
-    navigation.navigate('Signup' as never);
+    navigation.navigate('Signup');
+  };
+
+  const handleViewJournalEntries = () => {
+    navigation.navigate('JournalList');
   };
 
   return (
@@ -25,7 +38,10 @@ const HomeScreen = () => {
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
 
-      {/* Other sections or promotional content here */}
+      <TouchableOpacity style={styles.button} onPress={handleViewJournalEntries}>
+        <Text style={styles.buttonText}>View Journal Entries</Text>
+      </TouchableOpacity>
+
     </View>
   );
 };

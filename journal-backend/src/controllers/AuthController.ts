@@ -1,4 +1,3 @@
-// src/controllers/AuthController.ts
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import { User } from '../models/User';
@@ -10,7 +9,7 @@ export const register = async (req: Request, res: Response) => {
   const { username, password } = req.body;
 
   try {
-    // Check if user already exists
+
     const existingUser = await userRepository.findOne({ where: { username } });
     if (existingUser) {
       return res.status(409).json({ message: 'Username already exists' });

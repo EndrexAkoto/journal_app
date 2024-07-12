@@ -1,13 +1,11 @@
 import 'reflect-metadata';
-import express from 'express';
 import { createConnection } from 'typeorm';
-import authRouter from './routes/authRouter'; // Import router
-import { User } from './models/User';
+import express from 'express';
+import { User } from './models/User'; 
+import authRouter from './routes/authRouter'; 
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-
-app.use(express.json());
+const PORT = 5000;
 
 createConnection({
     type: 'mysql',
@@ -16,9 +14,8 @@ createConnection({
     username: 'root',
     password: 'MyP@ssw0rd123!',
     database: 'journal_app',
-    entities: [User], // Include your entities (models) here
-    synchronize: true, // Automatically sync database schema
-}).then(async () => {
+    entities: [User],
+    synchronize: true, }).then(async () => {
     console.log('Connected to database');
 
     // Mount the authRouter for /auth routes
@@ -33,4 +30,7 @@ createConnection({
     app.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
     });
-}).catch(err => console.error('Database connection error', err));
+}).catch(err => {
+    console.error('Database connection error', err);
+    process.exit(1); 
+});

@@ -1,12 +1,22 @@
-// components/JournalList.js
-
 import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
-const JournalList = ({ entries, onEdit, onDelete }) => {
+interface Entry {
+  id: React.Key | null | undefined;
+  title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined;
+  date: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined;
+}
+
+interface JournalListProps {
+  entries: Entry[];
+  onEdit: (entry: Entry) => void;
+  onDelete: (entry: Entry) => void;
+}
+
+const JournalList: React.FC<JournalListProps> = ({ entries, onEdit, onDelete }) => {
   return (
     <View style={styles.container}>
-      {entries.map((entry) => (
+      {entries.map((entry: Entry) => (
         <View key={entry.id} style={styles.entry}>
           <Text style={styles.title}>{entry.title}</Text>
           <Text style={styles.date}>{entry.date}</Text>
@@ -19,8 +29,8 @@ const JournalList = ({ entries, onEdit, onDelete }) => {
         </View>
       ))}
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

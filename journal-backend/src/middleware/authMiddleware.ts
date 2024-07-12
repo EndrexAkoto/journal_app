@@ -1,8 +1,11 @@
-// src/middleware/authMiddleware.ts
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-const verifyToken = (req: Request, res: Response, next: NextFunction) => {
+interface CustomRequest extends Request {
+  user?: any;
+}
+
+const verifyToken = (req: CustomRequest, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
@@ -13,9 +16,9 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     if (err) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
-    req['user'] = decoded;
+    req.user = decoded;
     next();
   });
 };
 
-export default verifyToken;
+export default verifyToken

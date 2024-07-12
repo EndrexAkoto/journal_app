@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Pressable, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import axios from 'axios';
+import { signup } from '../services/signupService';
 
 const SignupScreen = () => {
   const navigation = useNavigation();
@@ -17,18 +17,14 @@ const SignupScreen = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/signup', {
-        username,
-        email,
-        password,
-      });
+      const response = await signup({ username, email, password });
 
-      if (response.data.success) {
+      if (response.success) {
         Alert.alert('Success', 'Account created successfully!', [
           { text: 'OK', onPress: () => navigation.navigate('Login') }
         ]);
       } else {
-        Alert.alert('Error', response.data.message);
+        Alert.alert('Error', response.message);
       }
     } catch (error) {
       console.error(error);
