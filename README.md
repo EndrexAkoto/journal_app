@@ -19,7 +19,7 @@ Installation
 
     sh
 
-git clone https://github.com/your-username/JournalApp.git
+git clone https://github.com/EndrexAkoto/journal_app.git
 cd JournalApp/journal-backend
 
 Install dependencies:
@@ -78,7 +78,7 @@ Installation
 
     sh
 
-git clone https://github.com/your-username/JournalApp.git
+git clone https://github.com/EndrexAkoto/journal_app.git
 cd JournalApp
 
 Install dependencies:
