@@ -17,11 +17,8 @@ createConnection({
     entities: [User],
     synchronize: true, }).then(async () => {
     console.log('Connected to database');
-
-    // Mount the authRouter for /auth routes
     app.use('/auth', authRouter);
 
-    // Additional routes and middleware can be defined here
 
     app.get('/', (req, res) => {
         res.send('Hello, World!');

@@ -55,9 +55,7 @@ typeorm_1.createConnection({
 }).then(function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         console.log('Connected to database');
-        // Mount the authRouter for /auth routes
         app.use('/auth', authRouter_1["default"]);
-        // Additional routes and middleware can be defined here
         app.get('/', function (req, res) {
             res.send('Hello, World!');
         });
